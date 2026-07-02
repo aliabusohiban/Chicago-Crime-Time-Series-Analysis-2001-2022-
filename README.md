@@ -6,24 +6,45 @@ Portfolio Project 3, Part 1. Time series analysis of Chicago crime data, built t
 
 Source: Chicago Data Portal, Crimes 2001 to Present. Provided as a zip of per-year CSVs, loaded and concatenated into one DataFrame indexed by datetime. Two forms of the data are kept: the original per-event data (one row = one crime) and a daily resampled version (one row = one day) used for the seasonality analysis.
 
-## Questions Answered
+## Stakeholder Q&A
 
-1. Which police district has the most/least crime (2022)
-2. Is total crime increasing or decreasing over time, and which crime types buck the trend
-3. AM vs PM rush hour crime comparison
-4. Which months have the most/least crime, and which crime types don't follow that pattern
-5. Which holidays see the most crime
-6. What cycles (seasonality) exist in the data, weekly and annual
+**Q1: Which district had the most crimes in 2022? Which had the least?**
+District 8 had the most, 14,800 incidents. District 20 had the least at ~4,900 (District 31 excluded, it's an administrative code, not a patrol district).
+Plot: `district_crime_2022.png`
 
-## Key Findings
+**Q2: Is total crime increasing or decreasing across the years?**
+Decreasing overall, down 55%+ from 2001 to 2021. Reversed in 2022, ticked back up to ~240K.
+Plot: `total_crime_trend_2001_2022.png`
 
-- Crime fell over 55% from 2001 to 2021, then rose again in 2022. The decline reversed.
-- District 8 has the most crime in 2022. District 31 is not a real patrol district (administrative code), District 20 is the real lowest.
-- PM rush hour has more crime than AM rush hour across every major category, including motor vehicle theft.
-- July is the peak month, February the lowest. Gambling and Offense Involving Children don't follow the summer-peak pattern.
-- New Year's Day is the highest-crime holiday, ahead of Independence Day and Labor Day.
-- Crime repeats on two reliable cycles: 7 days (weekend peak, midweek trough) and 365 days (summer peak, winter trough).
+**Q3: Are crimes more common during AM or PM rush hour?**
+PM. Every top crime category is higher in the evening window than the morning one.
+Plot: `rush_hour_top5_comparison.png`
 
+**Q4: Is Motor Vehicle Theft more common AM or PM?**
+PM: 53,716 vs 41,578 AM.
+Plot: `motor_vehicle_theft_am_vs_pm.png`
+
+**Q5: What months have the most/least crime?**
+Most: July (~715K). Least: February (~530K).
+Plot: `total_crime_by_month.png`
+
+**Q6: Any crime types that don't follow the monthly pattern?**
+Yes. Gambling spikes hard May-Sep. Offense Involving Children spikes in January instead of summer.
+Plot: `monthly_distribution_heatmap.png`
+
+**Q7: Top 3 holidays for crime?**
+New Year's Day (32,725), Independence Day (22,672), Labor Day (22,164).
+Plot: `top3_holidays.png`
+
+**Q8: Top 5 crimes on each of those holidays?**
+New Year's: Theft, Battery, Criminal Damage, Deceptive Practice, Offense Involving Children.
+Independence Day: Battery, Theft, Criminal Damage, Assault, Narcotics.
+Labor Day: Battery, Theft, Criminal Damage, Narcotics, Assault.
+Plots: `top5_crimes_new_years.png`, `top5_crimes_independence_day.png`, `top5_crimes_labor_day.png`
+
+**Q9: What cycles exist in the data? How long, what magnitude?**
+Two cycles. Weekly (7 days): peak near weekend (+50), trough midweek (-48). Annual (365 days): peak summer, trough winter, swing of about ±140/day.
+Plots: `seasonal_decomposition_annual.png`, `seasonal_decomposition_weekly.png`
 ## Methods
 
 - `pandas` for datetime indexing, resampling, groupby aggregation
